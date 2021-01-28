@@ -14,10 +14,9 @@ else:
         data = pyzbar.decode(im)[0].data if im is not None else ""
         if im is None or not data:
             iserror.append(True)
-            datas.append("")
         else:
             iserror.append(False)
-            datas.append(data)
+        datas.append(data)
     for i in range(len(filenames)):
         if not iserror[i]:
             print("Decoded", filenames[i])
