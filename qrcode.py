@@ -11,12 +11,13 @@ else:
     iserror = []
     for filename in filenames:
         im = cv2.imread(filename)
-        if im is None:
+        data = pyzbar.decode(im)[0].data if im is not None else ""
+        if im is None or not data:
             iserror.append(True)
             datas.append("")
         else:
             iserror.append(False)
-            datas.append(pyzbar.decode(im)[0].data)
+            datas.append(data)
     for i in range(len(filenames)):
         if not iserror[i]:
             print("Decoded", filenames[i])
@@ -25,4 +26,4 @@ else:
             print("Error", filenames[i])
             print("\tImage is unreadable or non-exist or in unsupported format.\n")
     errorcnt = sum(iserror)
-    print(f"{errorcnt if errorcnt else 0} errors found.")
+    print(f"{errorcnt if errorcnt else 'No'} errors found.")
